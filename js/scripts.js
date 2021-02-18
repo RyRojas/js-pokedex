@@ -1,4 +1,4 @@
-pokemonList = [
+let pokemonList = [
     {
         name: 'Bulbasaur',
         height: 0.7,
@@ -21,16 +21,15 @@ pokemonList = [
     },
 ];
 
-//Iterate through each Pokemon in our list
-for (let i = 0; i < pokemonList.length; i++) {
-
+//Iterate through each Pokemon in our list (now in forEach cinemascope)
+pokemonList.forEach(function(pokemon) {
     //Initialize variable to build complete message, scope remians within loop block
-    let pokemonJudgement = `${pokemonList[i].name} (Height: ${pokemonList[i].height}m)`;
+    let pokemonJudgement = `${pokemon.name} (Height: ${pokemon.height}m)`;
     
     //Find the less short guys
-    if (pokemonList[i].height > 0.5) {
+    if (pokemon.height > 0.5) {
         pokemonJudgement = pokemonJudgement + ' - WOW! That\'s big. Well...it\'s not <b>too</b> short';
     }
 
     document.write(`${pokemonJudgement} <br>`);
-}
+});
