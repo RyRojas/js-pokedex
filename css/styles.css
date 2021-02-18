@@ -1,0 +1,13 @@
+body {
+    margin: 2rem;
+    line-height: 1.5;
+    font-size: 1.5rem;
+}
+
+@media all and (max-width: 49em) {
+    body {
+        margin: 1.25rem;
+        line-height: 1.5;
+        font-size: 1rem;
+    }   
+}
