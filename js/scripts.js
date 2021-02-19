@@ -33,17 +33,10 @@ let pokemonRepository = (function() {
             let entryKeys = Object.keys(pokemon)
 
             //Dummy variable to store results of conditional statement
-            let match = null;
-            //Iterate through both key arrays in order to compare them (switched back to for loop to match by index)
-            for (let i = 0; i < pokeKeys.length; i++)
-                if (pokeKeys[i] !== entryKeys[i]) {
-                    match = false;
-                    return console.log('Object properties do not match');
-                } else {
-                    match = true;
-                }
-            if (match) {
-                return pokemonList.push(pokemon);
+            const match = pokeKeys.filter((key) => !entryKeys.includes(key));
+
+            if (match.length === 0) {
+                pokemonList.push(pokemon);
             }
         } else {
             return console.log('Pokemon entered is not an object')
@@ -61,6 +54,16 @@ let pokemonRepository = (function() {
     }
 })();
 
+//BLOCK TO TEST ADD FUNCTION
+//---------------------------
+let x = {
+    name: 'Pokemon Man',
+    height: 1.2,
+    type: ['Normal']
+};
+
+pokemonRepository.add(x);
+
 //Iterate through each Pokemon in our list (now in forEach cinemascope)
 pokemonRepository.getAll().forEach(function(pokemon) {
     //Initialize variable to build complete message, scope remains within block
@@ -73,16 +76,6 @@ pokemonRepository.getAll().forEach(function(pokemon) {
 
     document.write(`${pokemonJudgement} <br>`);
 });
-
-//BLOCK TO TEST ADD FUNCTION
-//---------------------------
-// let x = {
-//     name: 'Pokemon Man',
-//     height: 1.2,
-//     type: ['Normal']
-// };
-//
-//pokemonRepository.add(x)
 
 //BLOCK TO TEST SEARCH FUNCTION
 //-----------------------------
