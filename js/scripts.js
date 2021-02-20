@@ -25,21 +25,46 @@ let pokemonRepository = (function() {
     function getAll() {
         return pokemonList;
     }
+    
+    function addEventListener(button, pokemon) {
+        button.addEventListener('click', function() {
+            showDetails(pokemon);
+        });
+    }
 
-    function add(pokemon) {
+    function addListItem(pokemon) {
+        let pokedexList = document.querySelector('ul');
+        let listItem = document.createElement('li');
+        let button = document.createElement('button');
+
+        //Generate each Pokemon entry
+        button.innerText = pokemon.name;
+        button.classList.add('pokedex-list__item');
+        addEventListener(button, pokemon);
+
+        //Generate list structure
+        listItem.appendChild(button);
+        pokedexList.appendChild(listItem);
+    }
+
+    function showDetails(pokemon) {
+        console.log(pokemon);
+    }
+
+    function addEntry(pokemon) {
         if (typeof(pokemon) === 'object') {
-            //Store the object keys for first object in array as well as the requested entry
-            let pokeKeys = Object.keys(pokemonList[0])
-            let entryKeys = Object.keys(pokemon)
+            //Store the object keys template as well as the requested entry
+            let pokeKeys = Object.keys(pokemonList[0]);
+            let entryKeys = Object.keys(pokemon);
 
-            //Dummy variable to store results of conditional statement
+            //Create array of entries not included in template
             const match = pokeKeys.filter((key) => !entryKeys.includes(key));
 
             if (match.length === 0) {
                 pokemonList.push(pokemon);
             }
         } else {
-            return console.log('Pokemon entered is not an object')
+            return console.log('Pokemon entered is not properly formatted as an object');
         }
     }
 
@@ -49,34 +74,15 @@ let pokemonRepository = (function() {
 
     return {
         getAll: getAll,
-        add: add,
+        addEventListener: addEventListener,
+        addListItem: addListItem,
+        showDetails: showDetails,
+        addEntry: addEntry,
         find: find
     }
 })();
 
-//BLOCK TO TEST ADD FUNCTION
-//---------------------------
-let x = {
-    name: 'Pokemon Man',
-    height: 1.2,
-    type: ['Normal']
-};
-
-pokemonRepository.add(x);
-
-//Iterate through each Pokemon in our list (now in forEach cinemascope)
+//Iterate through each Pokemon in our database and generate list
 pokemonRepository.getAll().forEach(function(pokemon) {
-    //Initialize variable to build complete message, scope remains within block
-    let pokemonJudgement = `${pokemon.name} (Height: ${pokemon.height}m)`;
-    
-    //Find the less short guys
-    if (pokemon.height > 0.5) {
-        pokemonJudgement = pokemonJudgement + ' - WOW! That\'s big. Well...it\'s not <b>too</b> short';
-    }
-
-    document.write(`${pokemonJudgement} <br>`);
+    pokemonRepository.addListItem(pokemon);
 });
-
-//BLOCK TO TEST SEARCH FUNCTION
-//-----------------------------
-//console.log(pokemonRepository.find('Squirtle'));

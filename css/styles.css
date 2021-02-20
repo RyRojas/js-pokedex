@@ -1,13 +1,57 @@
+/* Typography */
+h1 {
+    font-size: 2rem;
+}
+
+/* General Layout */
+
 body {
     margin: 2rem;
     line-height: 1.5;
     font-size: 1.5rem;
 }
 
+/* Pokemon List */
+
+.pokedex-container {
+    border-style: solid;
+    width: 50%;
+}
+
+.pokedex-list {
+    text-decoration: none;
+    list-style: none;
+    padding-inline-start: 0;
+
+}
+
+.pokedex-container h1 {
+    margin-left: 2.5%;
+}
+
+.pokedex-list__item {
+    background-color: #E6E8E7;
+    width: 95%;
+    padding: 1rem 0;
+    margin: .1rem 2.5%;
+    border-style: none;
+}
+
+/* Media Queries */
+
 @media all and (max-width: 49em) {
     body {
         margin: 1.25rem;
         line-height: 1.5;
         font-size: 1rem;
-    }   
+    }
+
+    .pokedex-container {
+        width: 100%;
+    }
+
+    .pokedex-container h1 {
+        margin-left: 0;
+        text-align: center;
+    }
 }
