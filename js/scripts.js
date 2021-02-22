@@ -1,26 +1,6 @@
 let pokemonRepository = (function() {
-    let pokemonList = [
-        {
-            name: 'Bulbasaur',
-            height: 0.7,
-            type: ['grass', 'poison']
-        },
-        {
-            name: 'Charmander',
-            height: 0.6,
-            type: ['fire']
-        },
-        {
-            name: 'Squirtle',
-            height: 0.5,
-            type: ['water']
-        },
-        {
-            name: 'Pikachu',
-            height: 0.4,
-            type: ['electric']
-        }
-    ];
+    let pokemonList = [];
+    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
     function getAll() {
         return pokemonList;
@@ -48,21 +28,26 @@ let pokemonRepository = (function() {
     }
 
     function showDetails(pokemon) {
-        console.log(pokemon);
+        loadDetails(pokemon).then(function() {
+            console.log(pokemon);
+        });
     }
 
     function addEntry(pokemon) {
         if (typeof(pokemon) === 'object') {
+            //No longer necessary due to implementation of API, preserving for posterity
+            //------
             //Store the object keys template as well as the requested entry
-            let pokeKeys = Object.keys(pokemonList[0]);
-            let entryKeys = Object.keys(pokemon);
+            // let pokeKeys = Object.keys(pokemonList[0]);
+            // let entryKeys = Object.keys(pokemon);
 
-            //Create array of entries not included in template
-            const match = pokeKeys.filter((key) => !entryKeys.includes(key));
+            // //Create array of entries not included in template
+            // const match = pokeKeys.filter((key) => !entryKeys.includes(key));
 
-            if (match.length === 0) {
-                pokemonList.push(pokemon);
-            }
+            // if (match.length === 0) {
+            //    pokemonList.push(pokemon);
+            //}
+            pokemonList.push(pokemon);
         } else {
             return console.log('Pokemon entered is not properly formatted as an object');
         }
@@ -72,17 +57,54 @@ let pokemonRepository = (function() {
        return pokemonList.filter(pokemon => pokemon.name === pokemonSearch);
     }
 
+    function loadList() {
+        return fetch(apiUrl).then(function(response) {
+            return response.json();
+        }).then(function(json) {
+            json.results.forEach(function(item) {
+                let pokemon = {
+                    name: item.name,
+                    detailsUrl: item.url
+                };
+
+                addEntry(pokemon);
+            });
+        }).catch(function(e) {
+            console.error(e);
+        })
+    }
+
+    function loadDetails(item) {
+        let url = item.detailsUrl;
+        
+        return fetch(url).then(function(response) {
+            return response.json();
+        }).then(function(details) {
+            item.imageUrl = details.sprites.front_default;
+            item.height = details.height;
+            item.weight = details.weight;
+            item.types = details.types;
+        }).catch(function(e) {
+            console.error(e);
+        });
+    }
+
     return {
         getAll: getAll,
         addEventListener: addEventListener,
         addListItem: addListItem,
         showDetails: showDetails,
         addEntry: addEntry,
-        find: find
+        find: find,
+        loadList: loadList,
+        loadDetails: loadDetails
     }
 })();
 
 //Iterate through each Pokemon in our database and generate list
-pokemonRepository.getAll().forEach(function(pokemon) {
-    pokemonRepository.addListItem(pokemon);
+pokemonRepository.loadList().then(function() {
+    pokemonRepository.getAll().forEach(function(pokemon) {
+        pokemonRepository.addListItem(pokemon);
+    });
 });
+
