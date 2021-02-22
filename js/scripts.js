@@ -12,6 +12,7 @@ let pokemonRepository = (function() {
         });
     }
 
+    //Build document structure for Pokedex list
     function addListItem(pokemon) {
         let pokedexList = document.querySelector('ul');
         let listItem = document.createElement('li');
@@ -27,12 +28,14 @@ let pokemonRepository = (function() {
         pokedexList.appendChild(listItem);
     }
 
+    //Display details for Pokemon selected
     function showDetails(pokemon) {
         loadDetails(pokemon).then(function() {
             console.log(pokemon);
         });
     }
 
+    //Build pokemonList array
     function addEntry(pokemon) {
         if (typeof(pokemon) === 'object') {
             //No longer necessary due to implementation of API, preserving for posterity
@@ -53,17 +56,24 @@ let pokemonRepository = (function() {
         }
     }
 
+    //Search by Pokemon name
     function find(pokemonSearch) {
        return pokemonList.filter(pokemon => pokemon.name === pokemonSearch);
     }
 
+    //Capitalize each Pokemon's name
+    function toProperCase(name) {
+        return name[0].toUpperCase() + name.substring(1);
+    }
+
+    //Load entries from PokeAPI
     function loadList() {
         return fetch(apiUrl).then(function(response) {
             return response.json();
         }).then(function(json) {
             json.results.forEach(function(item) {
                 let pokemon = {
-                    name: item.name,
+                    name: toProperCase(item.name),
                     detailsUrl: item.url
                 };
 
@@ -96,6 +106,7 @@ let pokemonRepository = (function() {
         showDetails: showDetails,
         addEntry: addEntry,
         find: find,
+        toProperCase: toProperCase,
         loadList: loadList,
         loadDetails: loadDetails
     }
