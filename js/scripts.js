@@ -1,11 +1,16 @@
 let pokemonRepository = (function() {
     let pokemonList = [];
-    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
+    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=151';
 
     function getAll() {
         return pokemonList;
     }
     
+    function toggleLoadingMessage() {
+        let loader = document.querySelector('.loader');
+        loader.classList.toggle('is-active');
+    }
+
     function addEventListener(button, pokemon) {
         button.addEventListener('click', function() {
             showDetails(pokemon);
@@ -68,6 +73,8 @@ let pokemonRepository = (function() {
 
     //Load entries from PokeAPI
     function loadList() {
+        toggleLoadingMessage();
+
         return fetch(apiUrl).then(function(response) {
             return response.json();
         }).then(function(json) {
@@ -78,13 +85,16 @@ let pokemonRepository = (function() {
                 };
 
                 addEntry(pokemon);
+                toggleLoadingMessage();
             });
         }).catch(function(e) {
             console.error(e);
+            toggleLoadingMessage();
         })
     }
 
     function loadDetails(item) {
+        toggleLoadingMessage();
         let url = item.detailsUrl;
         
         return fetch(url).then(function(response) {
@@ -94,8 +104,11 @@ let pokemonRepository = (function() {
             item.height = details.height;
             item.weight = details.weight;
             item.types = details.types;
+
+            toggleLoadingMessage();
         }).catch(function(e) {
             console.error(e);
+            toggleLoadingMessage();
         });
     }
 
