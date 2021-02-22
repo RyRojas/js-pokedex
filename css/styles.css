@@ -1,4 +1,16 @@
 /* Typography */
+@font-face {
+    font-family: 'Pokemon GB';
+    src: url('../files/pokemongb-raeo-webfont.woff2') format('woff2'),
+         url('../files/pokemongb-raeo-webfont.woff') format('woff'),
+         url('../files/PokemonGb-RAeo.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Pokemon GB', sans-serif;
+}
 h1 {
     font-size: 2rem;
 }
@@ -8,7 +20,7 @@ h1 {
 body {
     margin: 2rem;
     line-height: 1.5;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
 }
 
 /*-------------------
