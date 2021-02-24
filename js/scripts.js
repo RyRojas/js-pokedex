@@ -1,11 +1,16 @@
 let pokemonRepository = (function() {
     let pokemonList = [];
     let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=151';
+    let modalContainer = document.querySelector('#modal-container');
 
     function getAll() {
         return pokemonList;
     }
     
+    function hideDetails() {
+        modalContainer.classList.remove('is-visible');
+    }
+
     function toggleLoadingMessage() {
         let loader = document.querySelector('.loader');
         loader.classList.toggle('is-active');
@@ -33,10 +38,75 @@ let pokemonRepository = (function() {
         pokedexList.appendChild(listItem);
     }
 
-    //Display details for Pokemon selected
+    //Display detail modal for selected Pokemon
     function showDetails(pokemon) {
         loadDetails(pokemon).then(function() {
-            console.log(pokemon);
+            //Clear existing modal
+            modalContainer.innerHTML = '';
+            modalContainer.addEventListener('click', (e) => {
+                if (e.target === modalContainer) {
+                    hideDetails();
+                }
+            });
+
+            //Generate modal
+            let modal = document.createElement('div');
+            modal.classList.add('modal');
+
+            //Generate content for modal
+            let closeButtonElement = document.createElement('button');
+            closeButtonElement.classList.add('modal__close', 'top-right');
+            closeButtonElement.innerHTML = '✕';
+            closeButtonElement.addEventListener('click', () => {
+                hideDetails();
+            })
+
+            let pokePortrait = document.createElement('img');
+            pokePortrait.classList.add('modal__image');
+            pokePortrait.src = pokemon.imageUrl;
+
+            let modalDetails = document.createElement('div');
+            modalDetails.classList.add('modal__details');
+
+            let pokemonName = document.createElement('h1');
+            pokemonName.classList.add('modal__details--item');
+            pokemonName.innerHTML = pokemon.name;
+
+            let pokemonSpeciesType = document.createElement('p');
+            pokemonSpeciesType.classList.add('modal__details--item');
+            pokemonSpeciesType.innerHTML = pokemon.speciesType;
+
+            let pokemonWeight = document.createElement('p');
+            pokemonWeight.classList.add('modal__details--item');
+            pokemonWeight.innerHTML = `Height: ${pokemon.height}m`;
+
+            let pokemonHeight = document.createElement('p');
+            pokemonHeight.classList.add('modal__details--item');
+            pokemonHeight.innerHTML = `Weight: ${pokemon.weight}kg`;
+
+            let pokemonType = document.createElement('p');
+            pokemonType.classList.add('modal__details--item');
+            pokemonType.innerHTML = pokemon.types;
+
+            let pokemonDescription = document.createElement('p');
+            pokemonDescription.classList.add('modal__description');
+            pokemonDescription.innerHTML = pokemon.flavorText;
+
+            //Build modal structure
+
+            modalDetails.append(pokemonName, pokemonSpeciesType, pokemonHeight, pokemonWeight, pokemonType)
+            modal.append(closeButtonElement, pokePortrait, modalDetails, pokemonDescription);
+            modalContainer.append(modal);
+
+            //Visibility
+            modalContainer.classList.add('is-visible');
+
+            //Esc key functionality
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
+                    hideDetails();
+                }
+            });
         });
     }
 
@@ -73,7 +143,6 @@ let pokemonRepository = (function() {
 
     //Load entries from PokeAPI
     function loadList() {
-        toggleLoadingMessage();
 
         return fetch(apiUrl).then(function(response) {
             return response.json();
@@ -85,31 +154,58 @@ let pokemonRepository = (function() {
                 };
 
                 addEntry(pokemon);
-                toggleLoadingMessage();
             });
         }).catch(function(e) {
             console.error(e);
-            toggleLoadingMessage();
-        })
+        });
     }
 
-    function loadDetails(item) {
+    //Load entry details from PokeAPI
+    function loadDetails(pokemon) {
         toggleLoadingMessage();
-        let url = item.detailsUrl;
-        
+        let url = pokemon.detailsUrl;
+
         return fetch(url).then(function(response) {
             return response.json();
         }).then(function(details) {
-            item.imageUrl = details.sprites.front_default;
-            item.height = details.height;
-            item.weight = details.weight;
-            item.types = details.types;
+            //Convert types to comma separated string
+            let rawTypes = []
+            details.types.forEach( pokemon => {
+                rawTypes.push(toProperCase(pokemon.type.name));
+            });
+
+            let types = rawTypes.join(', ');
+
+            //Build object with additional details
+            pokemon.entry = details.id.toString().padStart(3, '0'); //add leading zeroes
+            pokemon.imageUrl = details.sprites.front_default;
+            pokemon.height = details.height/10; //converted from dm to m
+            pokemon.weight = details.weight/10; //converted from hg to kg
+            pokemon.types = types;
+
+            //Fetch further detail from Pokemon species url
+            return fetch(details.species.url);
+        }).then(function(response) {
+            return response.json();
+        }).then(function(details) {
+            //Filter for English flavor text from Pokemon Red
+            let rawFlavorText = details.flavor_text_entries
+                .filter( pEntry => (pEntry.language.name === 'en') && (pEntry.version.name === 'red'));
+
+            //Grab string and remove special characters    
+            let flavorText = rawFlavorText[0].flavor_text.replace(/[\n\f]+/g, " ");
+
+            //Add final details to pokemon object
+            pokemon.speciesType = details.genera[7].genus;
+            pokemon.flavorText = flavorText;
 
             toggleLoadingMessage();
-        }).catch(function(e) {
+        })
+        .catch(function(e) {
             console.error(e);
             toggleLoadingMessage();
         });
+
     }
 
     return {
@@ -122,7 +218,7 @@ let pokemonRepository = (function() {
         toProperCase: toProperCase,
         loadList: loadList,
         loadDetails: loadDetails
-    }
+    };
 })();
 
 //Iterate through each Pokemon in our database and generate list
