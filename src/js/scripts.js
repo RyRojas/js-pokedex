@@ -42,6 +42,7 @@ let pokemonRepository = (function () {
         loadDetails(pokemon).then(function () {
             const modalTitle = document.querySelector('.modal-title');
             const modalBody = document.querySelector('.modal-body');
+            modalBody.classList.add('pb-2');
             const modalFooter = document.querySelector('.modal-footer');
             
             //Clear existing modal
@@ -49,32 +50,33 @@ let pokemonRepository = (function () {
             modalBody.innerHTML = '';
             modalFooter.innerHTML = '';
 
+            //Build modal by section
             const pokePortrait = document.createElement('img');
             pokePortrait.classList.add('modal__image', 'col-4', 'g-0', 'mx-auto');
             pokePortrait.src = pokemon.imageUrl;
-            pokePortrait.setAttribute('alt', 'A "high resolution" sprite of ' + pokemon.name)
+            pokePortrait.setAttribute('alt', 'A "high resolution" sprite of ' + pokemon.name);
 
             const modalDetails = document.createElement('div');
-            modalDetails.classList.add('modal__details', 'col-sm-8', 'g-sm-0', 'text-center');
+            modalDetails.classList.add('modal__details','col-sm-8', 'g-sm-0', 'text-center');
 
             const pokemonName = document.createElement('h1');
             pokemonName.classList.add('modal__details--item');
             pokemonName.innerHTML = pokemon.name;
 
             const pokemonSpeciesType = document.createElement('p');
-            pokemonSpeciesType.classList.add('modal__details--item');
+            pokemonSpeciesType.classList.add('modal__details--item', 'mb-2', 'mb-sm-3');
             pokemonSpeciesType.innerHTML = pokemon.speciesType;
 
             const pokemonWeight = document.createElement('p');
-            pokemonWeight.classList.add('modal__details--item');
+            pokemonWeight.classList.add('modal__details--item', 'mb-2', 'mb-sm-3');
             pokemonWeight.innerHTML = `Height: ${pokemon.height}m`;
 
             const pokemonHeight = document.createElement('p');
-            pokemonHeight.classList.add('modal__details--item');
+            pokemonHeight.classList.add('modal__details--item', 'mb-2', 'mb-sm-3');
             pokemonHeight.innerHTML = `Weight: ${pokemon.weight}kg`;
 
             const pokemonType = document.createElement('p');
-            pokemonType.classList.add('modal__details--item');
+            pokemonType.classList.add('modal__details--item', 'mb-2', 'mb-sm-3');
             pokemonType.innerHTML = pokemon.types;
 
             const pokemonDescription = document.createElement('p');
@@ -101,7 +103,7 @@ let pokemonRepository = (function () {
             } else {
                 entry.style.display = 'none';
             }
-        })
+        });
     }
 
     //Capitalize each Pokemon's name
@@ -139,7 +141,7 @@ let pokemonRepository = (function () {
 
         return fetch(url).then( response => response.json() ).then(function (details) {
             //Convert types to comma separated string
-            let rawTypes = []
+            let rawTypes = [];
             details.types.forEach(pokemon => {
                 rawTypes.push(toProperCase(pokemon.type.name));
             });

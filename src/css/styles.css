@@ -14,22 +14,6 @@ body {
     color: #181010;
 }
 
-/* h1 {
-    font-size: 2rem;
-} */
-
-/* General Layout */
-
-/* * {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 2rem;
-    line-height: 1.5;
-    font-size: 1.25rem;
-} */
-
 /* Navbar */
 
 nav {
@@ -65,6 +49,14 @@ nav {
 
 .pokedex-list__item:hover::before, .pokedex-list__item:focus::before {
     transform: scaleX(1);
+}
+
+/* Modal Styling (to override a Bootstrap bug) */
+
+@media all and (min-width: 576px) {
+    .modal__details p {
+        text-align: left;
+    }
 }
 
 /*-------------------
