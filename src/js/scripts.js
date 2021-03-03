@@ -52,12 +52,12 @@ let pokemonRepository = (function () {
 
             //Build modal by section
             const pokePortrait = document.createElement('img');
-            pokePortrait.classList.add('modal__image', 'col-4', 'g-0', 'mx-auto');
+            pokePortrait.classList.add('modal__image', 'col-4', 'p-0', 'mx-auto');
             pokePortrait.src = pokemon.imageUrl;
             pokePortrait.setAttribute('alt', 'A "high resolution" sprite of ' + pokemon.name);
 
             const modalDetails = document.createElement('div');
-            modalDetails.classList.add('modal__details','col-sm-8', 'g-sm-0', 'text-center');
+            modalDetails.classList.add('modal__details','col-sm-8', 'p-sm-0', 'text-center');
 
             const pokemonName = document.createElement('h1');
             pokemonName.classList.add('modal__details--item');
