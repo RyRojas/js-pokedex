@@ -97,7 +97,7 @@ let pokemonRepository = (function () {
         const searchInput = document.querySelector('#search-bar').value.toUpperCase();
         const fullList = document.querySelectorAll('.pokedex-list__item');
 
-        fullList.forEach(entry => {
+        fullList.forEach(function (entry) {
             if (entry.innerText.toUpperCase().indexOf(searchInput) > -1) {
                 entry.style.display = '';
             } else {
@@ -119,7 +119,9 @@ let pokemonRepository = (function () {
 
     //Load entries from PokeAPI
     function loadList() {
-        return fetch(apiUrl).then( response => response.json() ).then(function (json) {
+        return fetch(apiUrl).then(function (response) {
+            return response.json();
+        }).then(function (json) {
             json.results.forEach(function (item) {
                 let pokemon = {
                     entry: (entryNo++).toString().padStart(3, '0'), //add leading zeros 
@@ -139,10 +141,12 @@ let pokemonRepository = (function () {
         toggleLoadingMessage();
         let url = pokemon.detailsUrl;
 
-        return fetch(url).then( response => response.json() ).then(function (details) {
+        return fetch(url).then(function(response) {
+            return response.json();
+        }).then(function (details) {
             //Convert types to comma separated string
             let rawTypes = [];
-            details.types.forEach(pokemon => {
+            details.types.forEach(function (pokemon) {
                 rawTypes.push(toProperCase(pokemon.type.name));
             });
 
@@ -156,10 +160,15 @@ let pokemonRepository = (function () {
 
             //Fetch further detail from Pokemon species url
             return fetch(details.species.url);
-        }).then( response => response.json() ).then(function (details) {
+        }).then(function (response) {
+            return response.json();
+        }).then(function (details) {
             //Filter for English flavor text from Pokemon Red
-            const rawFlavorText = details.flavor_text_entries
-                .filter(pEntry => (pEntry.language.name === 'en') && (pEntry.version.name === 'red'));
+            const rawFlavorText = details.flavor_text_entries.filter(function (pEntry) {
+                if (pEntry.language.name === 'en' && pEntry.version.name === 'red') {
+                    return true;
+                }
+            });
 
             //Grab string and remove special characters    
             const flavorText = rawFlavorText[0].flavor_text.replace(/[\n\f]+/g, " ");
