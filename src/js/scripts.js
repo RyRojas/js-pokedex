@@ -19,7 +19,7 @@ let pokemonRepository = (function () {
         const button = document.createElement('button');
 
         //Generate each Pokemon entry
-        button.innerText = `${pokemon.entry} ${pokemon.name}`;
+        button.innerText = pokemon.entry + ' ' + pokemon.name;
         button.classList.add('pokedex-list__item', 'list-group-item', 'list-group-item-action', 'mb-2');
         button.setAttribute('data-bs-toggle', 'modal');
         button.setAttribute('data-bs-target', '#pokemon-modal');
@@ -69,11 +69,11 @@ let pokemonRepository = (function () {
 
             const pokemonWeight = document.createElement('p');
             pokemonWeight.classList.add('modal__details--item', 'mb-2', 'mb-sm-3');
-            pokemonWeight.innerHTML = `Height: ${pokemon.height}m`;
+            pokemonWeight.innerHTML = 'Height: ' + pokemon.height + 'm';
 
             const pokemonHeight = document.createElement('p');
             pokemonHeight.classList.add('modal__details--item', 'mb-2', 'mb-sm-3');
-            pokemonHeight.innerHTML = `Weight: ${pokemon.weight}kg`;
+            pokemonHeight.innerHTML = 'Weight: ' + pokemon.weight + 'kg';
 
             const pokemonType = document.createElement('p');
             pokemonType.classList.add('modal__details--item', 'mb-2', 'mb-sm-3');
