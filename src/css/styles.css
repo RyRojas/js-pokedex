@@ -2,9 +2,9 @@
 
 @font-face {
     font-family: 'Pokemon GB';
-    src: url('../files/pokemongb-raeo-webfont.woff2') format('woff2'),
-         url('../files/pokemongb-raeo-webfont.woff') format('woff'),
-         url('../files/PokemonGb-RAeo.ttf') format('truetype');
+    src: url('../../files/pokemongb-raeo-webfont.woff2') format('woff2'),
+         url('../../files/pokemongb-raeo-webfont.woff') format('woff'),
+         url('../../files/PokemonGb-RAeo.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
