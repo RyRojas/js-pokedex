@@ -11,6 +11,7 @@
 
 body {
     font-family: 'Pokemon GB', sans-serif;
+    color: #181010;
 }
 
 /* h1 {
@@ -28,6 +29,43 @@ body {
     line-height: 1.5;
     font-size: 1.25rem;
 } */
+
+/* Navbar */
+
+nav {
+    background-color: #CC5A57;
+}
+
+/* Pokemon List */
+
+.pokedex-list__item {
+    background-color: #E6E8E8;
+    position: relative;
+    transition: all .25s ease-in-out;
+    z-index: 1;
+}
+
+.pokedex-list__item:hover, .pokedex-list__item:focus {
+    color: white;
+}
+
+.pokedex-list__item::before {
+    content: '';
+    background-color: #CC5A57;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: all .25s ease-in-out;
+    z-index: -1;
+}
+
+.pokedex-list__item:hover::before, .pokedex-list__item:focus::before {
+    transform: scaleX(1);
+}
 
 /*-------------------
 Loading Animation 
@@ -117,61 +155,4 @@ Github: https://github.com/raphaelfabeni/css-loader
     to {
         background-color: #fd0;
     }
-}
-
-/* Pokemon List */
-
-/*
-.pokedex-container {
-    border-style: solid;
-    width: 50%;
-}
-
-
-.pokedex-list {
-    text-decoration: none;
-    list-style: none;
-    padding-inline-start: 0;
-
-}
-
-.pokedex-container h1 {
-    margin-left: 2.5%;
-}
-
-.pokedex-list__item {
-    background-color: #E6E8E7;
-    width: 95%;
-    padding: 1rem 0;
-    margin: .1rem 2.5%;
-    border-style: none;
-} */
-
-/* Modal Styling */
-
-.modal__image {
-    padding: 0;
-}
-
-
-/* Media Queries */
-
-@media all and (max-width: 49em) {
-    h1 {
-        font-size: 1.5rem;
-        line-height: 1.3;
-    }
-    body {
-        margin: 1.25rem;
-        line-height: 1.5;
-        font-size: 1rem;
-    }
-    .pokedex-container {
-        width: 100%;
-    }
-    .pokedex-container h1 {
-        margin-left: 0;
-        text-align: center;
-    }
-
 }
