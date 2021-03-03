@@ -21,8 +21,8 @@ let pokemonRepository = (function () {
         //Generate each Pokemon entry
         button.innerText = pokemon.entry + ' ' + pokemon.name;
         button.classList.add('pokedex-list__item', 'list-group-item', 'list-group-item-action', 'mb-2');
-        button.setAttribute('data-bs-toggle', 'modal');
-        button.setAttribute('data-bs-target', '#pokemon-modal');
+        button.setAttribute('data-toggle', 'modal');
+        button.setAttribute('data-target', '#pokemon-modal');
         button.addEventListener('click', function () {
             showDetails(pokemon);
         });
