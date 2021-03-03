@@ -50,12 +50,12 @@ let pokemonRepository = (function () {
             modalFooter.innerHTML = '';
 
             const pokePortrait = document.createElement('img');
-            pokePortrait.classList.add('modal__image', 'col-sm-4', 'justify-content-sm-center', 'g-0');
+            pokePortrait.classList.add('modal__image', 'col-4', 'g-0', 'mx-auto');
             pokePortrait.src = pokemon.imageUrl;
             pokePortrait.setAttribute('alt', 'A "high resolution" sprite of ' + pokemon.name)
 
             const modalDetails = document.createElement('div');
-            modalDetails.classList.add('modal__details', 'col-sm-8', 'justify-content-sm-center', 'g-0');
+            modalDetails.classList.add('modal__details', 'col-sm-8', 'g-sm-0', 'text-center');
 
             const pokemonName = document.createElement('h1');
             pokemonName.classList.add('modal__details--item');
