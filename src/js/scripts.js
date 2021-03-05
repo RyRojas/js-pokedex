@@ -108,13 +108,13 @@ let pokemonRepository = (function () {
 
     //Capitalize each Pokemon's name
     function toProperCase(name) {
-        const splitName = name.replace(/-/g, " ").split(" ");
+        const splitName = name.replace(/-/g, ' ').split(' ');
 
         for (let i = 0; i < splitName.length; i++) {
             splitName[i] = splitName[i][0].toUpperCase() + splitName[i].substring(1);
         }
 
-        return splitName.join(" ");
+        return splitName.join(' ');
     }
 
     //Load entries from PokeAPI
@@ -171,7 +171,7 @@ let pokemonRepository = (function () {
             });
 
             //Grab string and remove special characters    
-            const flavorText = rawFlavorText[0].flavor_text.replace(/[\n\f]+/g, " ");
+            const flavorText = rawFlavorText[0].flavor_text.replace(/[\n\f]+/g, ' ');
 
             //Add final details to pokemon object
             pokemon.speciesType = details.genera[7].genus;
