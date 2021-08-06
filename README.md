@@ -1,7 +1,8 @@
 # PokeDex
 
 [Link to Live Project](https://ryrojas.github.io/js-pokedex/)
-![PokeDex Demo](.img/pokedex.gif)
+
+![PokeDex Demo](./img/pokedex.gif)
 
 ## Description
 
