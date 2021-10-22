@@ -1,62 +1,69 @@
 /* Typography */
 
 @font-face {
-    font-family: 'Pokemon GB';
-    src: url('../../files/pokemongb-raeo-webfont.woff2') format('woff2'),
-         url('../../files/pokemongb-raeo-webfont.woff') format('woff'),
-         url('../../files/PokemonGb-RAeo.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Pokemon GB';
+  src: url('../../files/pokemongb-raeo-webfont.woff2') format('woff2'),
+    url('../../files/pokemongb-raeo-webfont.woff') format('woff'),
+    url('../../files/PokemonGb-RAeo.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 body {
-    font-family: 'Pokemon GB', sans-serif;
-    color: #181010;
+  font-family: 'Pokemon GB', sans-serif;
+  color: #181010;
+}
+
+.pokemon-name,
+.pokemon-type {
+  text-transform: capitalize;
 }
 
 /* Navbar */
 
 nav {
-    background-color: #CC5A57;
+  background-color: #cc5a57;
 }
 
 /* Pokemon List */
 
 .pokedex-list__item {
-    background-color: #E6E8E8;
-    position: relative;
-    transition: all .25s ease-in-out;
-    z-index: 1;
+  background-color: #e6e8e8;
+  position: relative;
+  transition: all 0.25s ease-in-out;
+  z-index: 1;
 }
 
-.pokedex-list__item:hover, .pokedex-list__item:focus {
-    color: white;
+.pokedex-list__item:hover,
+.pokedex-list__item:focus {
+  color: white;
 }
 
 .pokedex-list__item::before {
-    content: '';
-    background-color: #CC5A57;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: all .25s ease-in-out;
-    z-index: -1;
+  content: '';
+  background-color: #cc5a57;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: all 0.25s ease-in-out;
+  z-index: -1;
 }
 
-.pokedex-list__item:hover::before, .pokedex-list__item:focus::before {
-    transform: scaleX(1);
+.pokedex-list__item:hover::before,
+.pokedex-list__item:focus::before {
+  transform: scaleX(1);
 }
 
 /* Modal Styling (to override a Bootstrap bug) */
 
 @media all and (min-width: 576px) {
-    .modal__details p {
-        text-align: left;
-    }
+  .modal__details p {
+    text-align: left;
+  }
 }
 
 /*-------------------
@@ -66,85 +73,88 @@ Github: https://github.com/raphaelfabeni/css-loader
 -------------------*/
 
 .loader {
-    color: #fff;
-    position: fixed;
-    box-sizing: border-box;
-    left: -9999px;
-    top: -9999px;
-    width: 0;
-    height: 0;
-    overflow: hidden;
-    z-index: 999999;
+  color: #fff;
+  position: fixed;
+  box-sizing: border-box;
+  left: -9999px;
+  top: -9999px;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  z-index: 999999;
 }
 
-.loader:after, .loader:before {
-    box-sizing: border-box;
-    display: none;
+.loader:after,
+.loader:before {
+  box-sizing: border-box;
+  display: none;
 }
 
 .loader.is-active {
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
 }
 
-.loader.is-active:after, .loader.is-active:before {
-    display: block;
+.loader.is-active:after,
+.loader.is-active:before {
+  display: block;
 }
 
 .loader-pokeball:before {
-    content: "";
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    top: 50%;
-    left: 50%;
-    margin: -50px 0 0 -50px;
-    background: linear-gradient(180deg, red 42%, #000 0, #000 58%, #fff 0);
-    background-repeat: no-repeat;
-    background-color: #fff;
-    border-radius: 50%;
-    z-index: 1;
-    animation: movePokeball 1s linear infinite both;
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  top: 50%;
+  left: 50%;
+  margin: -50px 0 0 -50px;
+  background: linear-gradient(180deg, red 42%, #000 0, #000 58%, #fff 0);
+  background-repeat: no-repeat;
+  background-color: #fff;
+  border-radius: 50%;
+  z-index: 1;
+  animation: movePokeball 1s linear infinite both;
 }
 
 .loader-pokeball:after {
-    content: "";
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    top: 50%;
-    left: 50%;
-    margin: -12px 0 0 -12px;
-    background-color: #fff;
-    border-radius: 50%;
-    z-index: 2;
-    animation: movePokeball 1s linear infinite both, flashPokeball .5s infinite alternate;
-    border: 2px solid #000;
-    box-shadow: 0 0 0 5px #fff, 0 0 0 10px #000;
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: 50%;
+  left: 50%;
+  margin: -12px 0 0 -12px;
+  background-color: #fff;
+  border-radius: 50%;
+  z-index: 2;
+  animation: movePokeball 1s linear infinite both,
+    flashPokeball 0.5s infinite alternate;
+  border: 2px solid #000;
+  box-shadow: 0 0 0 5px #fff, 0 0 0 10px #000;
 }
 
 @keyframes movePokeball {
-    0% {
-        transform: translateX(0) rotate(0);
-    }
-    15% {
-        transform: translatex(-10px) rotate(-5deg);
-    }
-    30% {
-        transform: translateX(10px) rotate(5deg);
-    }
-    45% {
-        transform: translatex(0) rotate(0);
-    }
+  0% {
+    transform: translateX(0) rotate(0);
+  }
+  15% {
+    transform: translatex(-10px) rotate(-5deg);
+  }
+  30% {
+    transform: translateX(10px) rotate(5deg);
+  }
+  45% {
+    transform: translatex(0) rotate(0);
+  }
 }
 
 @keyframes flashPokeball {
-    0% {
-        background-color: #fff;
-    }
-    to {
-        background-color: #fd0;
-    }
+  0% {
+    background-color: #fff;
+  }
+  to {
+    background-color: #fd0;
+  }
 }
